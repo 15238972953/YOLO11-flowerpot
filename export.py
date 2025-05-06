@@ -2,7 +2,7 @@ import onnx
 from ultralytics import YOLO
 
 # jeston 部署需要 先导出opset=11
-model = YOLO("runs\\train\\exp\\weights\\best.pt")
+model = YOLO("runs\\train\\exp2\\weights\\best.pt")
 model.export(format="onnx", opset=11)
 
 # 然后将 ir_version 修改为 7

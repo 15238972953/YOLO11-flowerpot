@@ -16,6 +16,6 @@ if __name__ == '__main__':
                 device='0',      # 指定使用的设备，'0'表示使用第一块GPU进行训练
                 optimizer='SGD', #设置优化器为SGD（随机梯度下降），用于模型参数更新
                 project='runs/train',  
-                name='exp2',
+                name='exp-MobileNetV2',
                 resume=False,
                 )
