@@ -4,7 +4,7 @@ from ultralytics import YOLO
  
 if __name__ == '__main__':
     model = YOLO('ultralytics/cfg/models/11/yolov11-flower.yaml')   # 指定YOLO模型对象，并加载指定配置文件中的模型配置
-    model.load('yolo11n.pt')      #加载预训练的权重文件'yolov11s.pt'，加速训练并提升模型性能
+    model.load('yolo11m.pt')      #加载预训练的权重文件'yolov11s.pt'，加速训练并提升模型性能
     model.train(data='ultralytics/cfg/datasets/flower.yaml',   # 指定训练数据集的配置文件路径，这个.yaml文件包含了数据集的路径和类别信息
                 cache=False,  # 是否缓存数据集以加快后续训练速度，False表示不缓存
                 imgsz=640,    # 指定训练时使用的图像尺寸，640表示将输入图像调整为640x640像素
@@ -16,6 +16,6 @@ if __name__ == '__main__':
                 device='0',      # 指定使用的设备，'0'表示使用第一块GPU进行训练
                 optimizer='SGD', #设置优化器为SGD（随机梯度下降），用于模型参数更新
                 project='runs/train',  
-                name='exp_250',
-                resume=False,
+                name='exp_250_m',
+                resume=True,
                 )

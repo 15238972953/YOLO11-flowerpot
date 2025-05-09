@@ -124,3 +124,20 @@ cfg: # (str, optional) for overriding defaults.yaml
 
 # Tracker settings ------------------------------------------------------------------------------------------------------
 tracker: botsort.yaml # (str) tracker type, choices=[botsort.yaml, bytetrack.yaml]
+
+
+# Distill settings
+teacher_weights:
+teacher_cfg:
+kd_loss_type: all # 'logical', 'feature', 'all'
+kd_loss_decay: cosine # 'cosine', 'linear', 'cosine_epoch', 'linear_epoch', 'constant'
+teacher_kd_layers: 16,19,22
+student_kd_layers: 16,19,22
+
+# logical distillation settings
+logical_loss_type: BCKD # 'l1', 'l2', 'BCKD'
+logical_loss_ratio: 1.0
+
+# feature distillation settings
+feature_loss_type: cwd # 'mimic', 'mgd', 'cwd', 'chsim', 'sp'
+feature_loss_ratio: 1.0
