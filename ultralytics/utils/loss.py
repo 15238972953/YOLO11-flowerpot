@@ -9,7 +9,7 @@ from ultralytics.utils.ops import crop_mask, xywh2xyxy, xyxy2xywh
 from ultralytics.utils.tal import RotatedTaskAlignedAssigner, TaskAlignedAssigner, dist2bbox, dist2rbox, make_anchors
 from ultralytics.utils.torch_utils import autocast
 
-from .metrics import bbox_iou, probiou
+from .metrics import bbox_iou, probiou, wasserstein_loss
 from .tal import bbox2dist
 
 
@@ -101,6 +101,11 @@ class BboxLoss(nn.Module):
         weight = target_scores.sum(-1)[fg_mask].unsqueeze(-1)
         iou = bbox_iou(pred_bboxes[fg_mask], target_bboxes[fg_mask], xywh=False, CIoU=True)
         loss_iou = ((1.0 - iou) * weight).sum() / target_scores_sum
+
+        nwd = wasserstein_loss(pred_bboxes[fg_mask], target_bboxes[fg_mask])
+        iou_ratio = 0.3  #可调超参数，小目标可变低
+        nwd_loss = ((1.0 - nwd) * weight).sum() / target_scores_sum
+        loss_iou = iou_ratio * loss_iou + (1 - iou_ratio) * nwd_loss
 
         # DFL loss
         if self.dfl_loss:
